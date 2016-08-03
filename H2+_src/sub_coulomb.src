@@ -1,0 +1,36 @@
+#!/bin/bash
+########################################################################
+# SUN Grid Engine job wrapper
+# parallel job on opteron queue
+########################################################################
+#$ -N Coulomb.H2
+#$ -pe mpi2 1
+#$ -q wp02
+#$ -j y
+#$ -M 3juholee@physics.rutgers.edu
+#$ -m e
+#$ -v WIEN_DMFT_ROOT,LD_LIBRARY_PATH
+########################################################################
+# DON'T remove the following line!
+source $TMPDIR/sge_init.sh
+########################################################################
+export WIEN_DMFT_ROOT=/home/haule/dmft_w2k/bin
+export PYTHONPATH=/home/haule/dmft_w2k/bin
+export SCRATCH="."
+export WIENROOT=/home/haule/wien_000
+export SMPD_OPTION_NO_DYNAMIC_HOSTS=1
+
+export OMP_NUM_THREADS=12
+
+echo "/opt/mpich2/intel/11.1/bin/mpiexec  -port $port -np $NSLOTS -machinefile $TMPDIR/machines -env OMP_NUM_THREADS 1 -envlist  LD_LIBRARY_PATH,SCRATCH,WIEN_DMFT_ROOT,PYTHONPATH,WIENROOT" > mpi_prefix.dat
+
+
+mkdir $WORK/$jobdir/H2+
+rcp rupc06:$SGE_O_WORKDIR/H2+/H2_solution.* $WORK/$jobdir/H2+
+
+cd $WORK/$jobdir
+	
+python Coulomb_simps.py
+#python h2_iter.py
+
+
