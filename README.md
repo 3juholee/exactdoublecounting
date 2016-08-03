@@ -1,1 +1,1 @@
-# Exact double-counting functional for LDA+DMFT tested on H2 molecule
+# Dynamical mean field theory for diatomic molecules and the exact double counting
