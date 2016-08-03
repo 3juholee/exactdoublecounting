@@ -1,19 +1,23 @@
-analysis of the crucial 1ptl basis: (100),(200),(210)
- -> analysis.py : draw diagonal component
+7/22/2012 Sun
 
-7/22/2012 Sun.
-@ analysis2.py : draw U component
+Based on the following paper
+    :G. Hadinger, M. Aubert-Frecon, and G. Hadinger, J. Phys. B: At., Mol. Opt. Phys. 22, 697 (1989) 
 
-@ input2.py: remove (1,1)
-	-> compare:	-2.2701
-						:	-2.2707(including (1,1))
+Calculation of basis set (solution of the Schrodinger equation of H2+ ion)
+and the corresponding Coulomb matrix (a matrix of 4 indices)
 
-add iR = 234(6.0 au)
 
-7/25/2012 Wed
-add iR = 475(11.5au) to know the U component at large R
+0. Pythonization of the fortran code BabHil.f90
+    - enter: "f2py -c BabHil.f90 -m BabHil"
 
-7/29/2012 SUN
-exact.py ->(copy) parameter.py
-	: scale up or down off-diagonal elements
-	: using 'input2.py' :exclude (22)
+
+
+1. h2_iter.py 
+    - input.py : (nlm) states to be calculated
+    - which.py : internuclear distance (ex: 34=1.405a.u., 180=4.97a.u,...)
+                 to be calculated
+
+
+2. Coulomb_simps.py
+    - precomputed files (the result of "h2_iter.py" needed) in H2+/ folder needed
+    - input.py/which.py <- keep the same input parameters with h2_iter.py
